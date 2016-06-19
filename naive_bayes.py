@@ -3,6 +3,7 @@
 __author__ = "Rogers de Pelle"
 __contact__ = "@rogersdepelle"
 
+from math import log, exp
 
 def learn(docs, values):
     """
@@ -27,20 +28,26 @@ def learn(docs, values):
         n_words = len(text)
         probabilities[value]['words'] = {}
         for word in vocabulary:
+            print "gg"
             n_times = text.count(word)
+            print n_times
             probabilities[value]['words'][word] = float(n_times + 1) / (n_words + len(vocabulary))
 
-    print probabilities
+    return probabilities, vocabulary
 
 
-def classify():
-    """
-    #all words in Doc that contain tokens found in Vocabulary
-    positions = doc.split intersection vocabulary
-    v = 0
-    for value in values
-        probabilities[value]
+def classify(doc, probabilities, vocabulary, values):
+    old_prob = float("-inf")
+    result = ""
 
-    return v
-    """
-    return 0
+    words = set(doc.split()).intersection(vocabulary)
+    for value in values:
+        prob = 1
+        for word in words:
+            prob += log(probabilities[value]['words'][word])
+        prob += log(probabilities[value]['prob'])
+        if prob > old_prob:
+         old_prob = prob
+         result = value
+
+    return result
