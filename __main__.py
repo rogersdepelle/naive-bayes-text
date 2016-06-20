@@ -50,7 +50,7 @@ def get_text(begin, end, positive_path, negative_path, option):
 
     docs = {'pos':[], 'neg':[]}
 
-    for x in xrange(begin,end):
+    for x in xrange(begin,end+1):
         try:
             file_path = positive_path + str(x) + ".txt"
             file = open(file_path)
