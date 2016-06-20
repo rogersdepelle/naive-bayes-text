@@ -5,6 +5,7 @@ __contact__ = "@rogersdepelle"
 
 from math import log, exp
 
+
 def learn(docs, values):
     """
         docs: Set of text documents along with their target values;
@@ -15,12 +16,10 @@ def learn(docs, values):
     probabilities = {}
     vocabulary = set()
 
-    #collect all distinct words, punctuation, and other tokens
     for value in values:
         vocabulary |= set(' '.join(docs[value]).split())
         n_docs += len(docs[value])
 
-    #calculate the probabilities
     for value in values:
         probabilities[value] = {}
         probabilities[value]['prob'] = len(docs[value])/float(n_docs)
@@ -28,15 +27,17 @@ def learn(docs, values):
         n_words = len(text)
         probabilities[value]['words'] = {}
         for word in vocabulary:
-            print "gg"
             n_times = text.count(word)
-            print n_times
             probabilities[value]['words'][word] = float(n_times + 1) / (n_words + len(vocabulary))
 
     return probabilities, vocabulary
 
 
 def classify(doc, probabilities, vocabulary, values):
+    """
+        probabilities: Dict with words probalities
+        vocabulary: All distinct words in training text
+    """
     old_prob = float("-inf")
     result = ""
 
